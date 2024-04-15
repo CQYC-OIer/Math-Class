@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>数学课座位抽取</title>
 </head>
 
 <body>
@@ -115,6 +115,10 @@
             'name': 'zcq',
             'uid': 705012
         },
+        {
+            'name': 'pyy',
+            'uid': 581316
+        },
     ]
 
     queue = [{ 'name': 'xht', 'uid': 100544 }];
@@ -130,6 +134,9 @@
     }
 
     function getImg(id, w = 100) {
+        if (id == -1) {
+            return `<a href="https://www.luogu.com.cn/user/-1" target="_blank"><img src="https://cdn.luogu.com.cn/upload/usericon/-1.png" height="${w}" width="${w}"></a>`;
+        }
         return `<a href="https://www.luogu.com.cn/user/${queue[id].uid}" target="_blank"><img src="https://cdn.luogu.com.cn/upload/usericon/${queue[id].uid}.png" height="${w}" width="${w}"></a>`
     }
 
@@ -141,6 +148,7 @@
             var temp = [0, 0, 0, 0, 0, 0, 0];
             room.push(temp);
         }
+        room.push([0, -1, -1, 0, 0, - 1, -1]);
         for (var i = 1; i <= 1000; i++) {
             var x, y;
             x = rand(1, cnt);
@@ -162,7 +170,7 @@
 
     function getClassRoom() {
         var res = '';
-        for (var i = 1; i <= 4; i++) {
+        for (var i = 1; i <= 5; i++) {
             for (var j = 1; j <= 6; j++) {
                 res += getImg(room[i][j]);
             }
@@ -205,9 +213,9 @@
     }
 
     function change(id) {
-        var x = rand(1, 4), y = rand(1, 6);
-        for (; room[x][y] != 0;) {
-            x = rand(1, 4), y = rand(1, 6);
+        var x = rand(1, 5), y = rand(1, 6);
+        for (; room[x][y] != 0 || (x == 5 && !(y == 3 || y == 4));) {
+            x = rand(1, 5), y = rand(1, 6);
         }
         room[x][y] = id;
         update(id);
